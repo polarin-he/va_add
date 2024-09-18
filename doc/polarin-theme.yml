@@ -1,0 +1,57 @@
+extends: default
+page:
+  margin: [1.5cm, 1cm, 1.5cm, 1.0cm]
+  margin-inner: 1.5cm
+  margin-outer: 1.0cm
+header:
+  font-color: #000000
+  border-color: #000000
+  border-style: solid
+  border-width: 1
+  height: 1.5cm
+  recto:
+    left:
+      content: |
+        POLARIN Virtual Access +
+        {docdate}
+    right:
+      content: |
+        {document-subtitle} +
+        Page {page-number} of {page-count}
+  verso:
+    right:
+      content: |
+        POLARIN Virtual Access +
+        {docdate}
+    left:
+      content: |
+        {document-subtitle} +
+        Page {page-number} of {page-count}
+footer:
+  height: 1cm 
+  border-color: #000000
+  border-style: solid
+  border-width: 1
+  line_height: 1
+  recto:
+    right: 
+      content: ' '
+  verso:
+    left: 
+      content: ' '
+title-page:
+  align: right
+  revision:
+    delimeter: ','
+  logo:
+    image: image:logo/polarin-web1.svg[pdfwidth=400px]
+    align: right
+    top: 30%
+  title:
+    font-family: Noto Serif
+    font-size: 18pt
+    margin-top: 1cm
+  subtitle:
+    font-family: Noto Serif
+    font-size: 14pt
+    font-style: bold

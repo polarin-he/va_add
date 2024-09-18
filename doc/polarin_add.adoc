@@ -1,0 +1,89 @@
+:doctype: article
+:pdf-folio-placement: physical
+:sectanchors:
+:toc: macro
+:toclevels: 4
+:sectnums:
+:sectnumlevels: 6
+:chapter-label:
+:xrefstyle: short
+:title-page:
+= Technical documentation: Architecture Design Document
+
+<<<
+
+
+[discrete]
+== Versions
+
+[cols=">1,^2,5,2",]
+|===
+|Version |Date |Comment |Responsible
+|0.1 |2024-??-?? |???. |Øystein Godøy
+|===
+
+This work is released under the Creative Commons Attribution 4.0 License. To view a copy of the license, visit https://creativecommons.org/licenses/by/4.0/. 
+
+image::Pictures/ccby.png[]
+
+<<<
+
+toc::[]
+
+<<<
+
+== Introduction
+
+=== Background
+
+// Copied from website...
+POLARIN is an international network of polar research infrastructures and their services, aiming at addressing the scientific challenges of the polar regions. 
+The network includes a wide array of complementary and interdisciplinary top level research infrastructures: Arctic and Antarctic research stations, research vessels and icebreakers operating at both poles, observatories, data infrastructures and ice and sediment core repositories.
+
+POLARIN will provide integrated, challenge-driven, and combined access to these infrastructures to facilitate interdisciplinary research on complex processes.
+POLARIN has the following six specific objectives, coherent with the work packages, each with measurable outcomes:
+
+. Enable science for understanding and predicting key processes in polar regions.
+. Provide efficient challenge-driven transnational access (TA) to top level RIs in the polar regions.
+. Improve data services and provide customised data products.
+. Provide virtual access (VA) to data and data services.
+. Provide training for infrastructure users.
+. Advertise RI services and engage RI users. 
+
+This document is addressing user requirements for items 3 and 4 above, with specific emphasis on item 4 - virtual access to data.
+
+The term data product is quite wide and in the remaining the term dataset will be used. 
+This can be observational data but also processed observations etc for a specific purpose.
+The working definition of a dataset is in line with the INSPIRE directive:
+
+NOTE: “an identifiable collection of spatial data”, i.e. a collection of data that has a reference by name or coordinates to a geographic location or area, and which in addition have a designated start and end time. 
+
+A data set can contain observations (remote or in situ), derived quantities (from either of these two types of data sources) or forecasts of future states of environmental parameters. 
+Data values can be located at a single point, along a line or transect, in a regular or irregular grid, and be captured or estimated at one or more altitudes/depths. 
+A data set can be stored on paper, in files (one or more), or in a database, and is often accompanied by descriptions (metadata) of its content. 
+
+POLARIN is Virtual Access will contain a variety of data, ranging from raw data to processed and aggregated data. 
+Among others, it will contain point data, trajectory data, profile data, time series, and gridded data. 
+How these various data types are handled depends on the use cases identified, translated into requirements and subsequently to the detailed design.
+
+The first version of this document was developed from a similar document used within Svalbard Integrated Arctic Earth Observing System (SIOS).
+
+=== Scope of document
+
+This document describes the architecture of POLARIN Virtual Access.
+
+NOTE: Decide if RM-ODP should be used...
+
+FIXME
+
+=== Intended audience
+
+Data and system managers within POLARIN, in particular participants in POLARIN Work Packages 4 and 5, "Improvement of data services and customised data products" and "Provision of virtual access" respectively.
+
+=== Applicable documents
+
+[horizontal]
+[[dow]]RD-1:: FIXME DOW.
+
+== Whatever...
+
