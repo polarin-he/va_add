@@ -4,7 +4,7 @@
 collections "External sources" as ext
 
 ' SIOS elements
-frame SIOS {
+frame "SIOS (WP 5)" {
 component "harvester" as mdh
 component "mdhtransform" as mdt
 component "mdfilter" as mdf
@@ -15,6 +15,8 @@ mdcat
 Catalogue is available
 through machine interfaces
 offered through pycsw
+(supporting several protocols
+like OAI-PMH, OGC CSW, OpenSearch etc)
 ....
 Discovery metadata
 contain links to
@@ -31,9 +33,9 @@ mdi --> mdc
 ext --> mdh
 
 ' CNR elements, not sure I understand all
-frame CNR {
+frame "CNR/ETT (WP 4)" {
 component "GeoNetwork" as gn
-component "ERDDAP/NcWMS" as erddap
+component "ERDDAP/ncWMS" as erddap
 component "card/store" as cs
 component "webgis" as wg
 component "Dashboard" as db
@@ -44,6 +46,7 @@ gn --> mdc
 
 gn --> cs
 cs --> nb
+cs --> wg
 erddap --> db
 erddap --> wg
 erddap --> nb
