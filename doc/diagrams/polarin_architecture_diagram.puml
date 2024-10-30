@@ -4,7 +4,7 @@
 collections "External sources" as ext
 
 ' SIOS elements
-frame "SIOS (WP 5)" {
+frame "WP 5 (SIOS)" {
 component "harvester" as mdh
 component "mdhtransform" as mdt
 component "mdfilter" as mdf
@@ -33,7 +33,7 @@ mdi --> mdc
 ext --> mdh
 
 ' CNR elements, not sure I understand all
-frame "CNR/ETT (WP 4)" {
+frame "WP 4 (CNR/ETT)" {
 component "GeoNetwork" as gn
 component "ERDDAP/ncWMS" as erddap
 component "card/store" as cs

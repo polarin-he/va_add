@@ -24,7 +24,7 @@
 
 This work is released under the Creative Commons Attribution 4.0 License. To view a copy of the license, visit https://creativecommons.org/licenses/by/4.0/. 
 
-image::Pictures/ccby.png[]
+image::pictures/ccby.png[]
 
 <<<
 
@@ -50,31 +50,12 @@ POLARIN has the following six specific objectives, coherent with the work packag
 . Provide training for infrastructure users.
 . Advertise RI services and engage RI users. 
 
-This document is addressing user requirements for items 3 and 4 above, with specific emphasis on item 4 - virtual access to data.
-
-The term data product is quite wide and in the remaining the term dataset will be used. 
-This can be observational data but also processed observations etc for a specific purpose.
-The working definition of a dataset is in line with the INSPIRE directive:
-
-NOTE: “an identifiable collection of spatial data”, i.e. a collection of data that has a reference by name or coordinates to a geographic location or area, and which in addition have a designated start and end time. 
-
-A data set can contain observations (remote or in situ), derived quantities (from either of these two types of data sources) or forecasts of future states of environmental parameters. 
-Data values can be located at a single point, along a line or transect, in a regular or irregular grid, and be captured or estimated at one or more altitudes/depths. 
-A data set can be stored on paper, in files (one or more), or in a database, and is often accompanied by descriptions (metadata) of its content. 
-
-POLARIN is Virtual Access will contain a variety of data, ranging from raw data to processed and aggregated data. 
-Among others, it will contain point data, trajectory data, profile data, time series, and gridded data. 
-How these various data types are handled depends on the use cases identified, translated into requirements and subsequently to the detailed design.
-
-The first version of this document was developed from a similar document used within Svalbard Integrated Arctic Earth Observing System (SIOS).
-
 === Scope of document
 
 This document describes the architecture of POLARIN Virtual Access.
+It is not an official deliverable of the project, but aims to establish a common foundation for the work in work packages 4 and 5.
 
-NOTE: Decide if RM-ODP should be used...
-
-FIXME
+NOTE: This document is not a formalised Architecture Document following a formalised approach like RM-ODP (Reference Model for Open Distributed Processing), but rather a lightweight architecture approach.
 
 === Intended audience
 
@@ -83,7 +64,138 @@ Data and system managers within POLARIN, in particular participants in POLARIN W
 === Applicable documents
 
 [horizontal]
-[[dow]]RD-1:: FIXME DOW.
+[[dow]]RD-1:: Description of work as represented by the proposal.
+[[ucd]]RD-2:: Use Case Document (in draft version)
+[[cd]]RD-3:: Concept document (not available yet)
 
-== Whatever...
+== Overall concept
+An outline of the division of tasks between work package 4 and 5 is provided in <<architecturediagram>>.
+This diagram indicates that development of the human front end to the Polarin data catalogue is done within WP 4, while virtual access as such is provided in WP 5.
+The latter is done through compilation of the Polarin data catalogue (WP 5).
+This catalogue is utilised by the human front end developed in WP 4.
+The requirements that the human interface has to fulfil is outlined in <<ucd>>.
 
+NOTE: The front end can add additional sources to the human front end, but will have to check for uniqueness using the identifiers of the datasets found in the Polarin data catalogue.
+
+// Potentially to be moved down and replaced by a more dedicated illustration here.
+[[architecturediagram]]
+.Architecture diagram
+image::diagrams/polarin_architecture_diagram.png[pdfwidth=500px, align=center]
+
+The datasets relevant for Polarin may be hosted in a number of data centres.
+Some of these are members of Polarin, while others are not but have been used by research infrastructures/stations for a long period.
+All datasets have to be properly tagged with Polarin as a project name.
+This information is used to filter out the relevant datasets for Polarin.
+
+NOTE: A minimum discovery metadata profile has been identified and is further described below.
+
+== Detailed architecture
+
+=== Architecture overview
+
+NOTE: Should use <<architecturediagram>> here and create a new above.
+
+=== Data catalogue
+
+FIXME
+
+=== Human frontend
+
+FIXME
+
+== Documentation standards
+
+=== Minimum discovery metadata profile
+A list of generic elements is provided in <<discoverymetadataprofile>>.
+In this table, an explanation of the element as well as a mapping to ISO-19115 is done at a generic level, since ISO-19115 has many different implementation profiles.
+
+NOTE: It is expected that a number of metadata standards has to be supported, including various profiles of ISO-19115, schema.org (preferably ESIP's science on schema.org), GCMD DIF, STAC etc.
+
+FIXME
+
+[[discoverymetadataprofile]]
+.A minimum discovery metadata profile has been defined.
+[%header, cols="1,4,1", header=True]
+|===
+|Element
+|Purpose
+|ISO-19115
+
+|Metadata identifier
+|A unique identifier for the dataset. 
+This is used to avoid duplicate records in aggregator catalogues.
+Utilisation of UUID with a namespace prefix is recommended.
+|FIXME
+
+|Last update of metadata
+|An ISO8601 datetime for the last update of the metadata record.
+|FIXME
+
+|Title
+|To provide a brief explanatory title for the dataset
+|FIXME
+
+|Abstract
+|A short summary of the dataset, its purpose and how it was generated.
+|FIXME
+
+|Temporal Extent
+|The temporal spanning of the dataset. 
+This can be a multi temporal dataset.
+|FIXME
+
+|Geographical Extent
+|The geographical location of the dataset.
+This can be a point, a bounding box, trajectory or a polygon.
+|FIXME
+
+|Keywords
+|Keywords describing the dataset.
+Ideally this comes from controlled vocabularies and describes the variables of the dataset. 
+|FIXME
+
+|Personnel
+|Identification of all people that have contributed to the dataset.
+This requires full name, email, affiliation and a role description in the dataset.
+The latter has to come from a controlled vocabulary.
+|FIXME
+
+|Publisher
+|This is identification of the data centre publishing the data.
+It contains a long and short name for the data centre and URL to the landing page.
+|FIXME
+
+|Use constraint
+|This is a license for the data.
+This is a URL to the license text and an identifier.
+Utilisation of SPDX is recommended.
+|FIXME
+
+|Data Access
+|This provides direct access to the dataset for download etc. 
+It is not a landing page, but a direct link to the data and indication using a controlled vocabulary of the access mechanism (ranging from direct download to OPeNDAP and OGC WMS).
+|FIXME
+
+|Project
+|A list of projects that has contributed to the creation of the dataset.
+Polarin has to be one of the projects.
+|FIXME
+
+|===
+
+=== Data documentation standards
+
+Polarin is recommending usage of Darwin Core Archives and CF-NetCDF for documentation of datasets.
+
+NOTE: Further details to be clarified.
+
+FIXME
+
+Darwin Core Archive:: Is suitable for...
+CF-NetCDF:: Is suitable for...
+
+NOTE: Data that doesn't fit into the classes above should be accompanied by a detailed documentation in PDF format.
+
+=== Exchange of discovery metadata
+
+FIXME
