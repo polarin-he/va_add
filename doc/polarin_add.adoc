@@ -106,80 +106,169 @@ FIXME
 == Documentation standards
 
 === Minimum discovery metadata profile
-A list of generic elements is provided in <<discoverymetadataprofile>>.
-In this table, an explanation of the element as well as a mapping to ISO-19115 is done at a generic level, since ISO-19115 has many different implementation profiles.
+A list of generic elements is provided in <<discoverymetadataprofile>>, together with a high level explanation. In <<discoverymetadatamapping>> a suggested mapping between the metadata elements and commonly used metadata
+standards is provided.
 
 NOTE: It is expected that a number of metadata standards has to be supported, including various profiles of ISO-19115, schema.org (preferably ESIP's science on schema.org), GCMD DIF, STAC etc.
 
-FIXME
 
 [[discoverymetadataprofile]]
 .A minimum discovery metadata profile has been defined.
-[%header, cols="1,4,1", header=True]
+[%header, cols="1,4", header=True]
 |===
 |Element
 |Purpose
-|ISO-19115
 
 |Metadata identifier
 |A unique identifier for the dataset. 
 This is used to avoid duplicate records in aggregator catalogues.
 Utilisation of UUID with a namespace prefix is recommended.
-|FIXME
 
 |Last update of metadata
 |An ISO8601 datetime for the last update of the metadata record.
-|FIXME
 
 |Title
 |To provide a brief explanatory title for the dataset
-|FIXME
 
 |Abstract
 |A short summary of the dataset, its purpose and how it was generated.
-|FIXME
 
 |Temporal Extent
 |The temporal spanning of the dataset. 
 This can be a multi temporal dataset.
-|FIXME
 
 |Geographical Extent
 |The geographical location of the dataset.
 This can be a point, a bounding box, trajectory or a polygon.
-|FIXME
 
 |Keywords
 |Keywords describing the dataset.
 Ideally this comes from controlled vocabularies and describes the variables of the dataset. 
-|FIXME
 
 |Personnel
 |Identification of all people that have contributed to the dataset.
 This requires full name, email, affiliation and a role description in the dataset.
 The latter has to come from a controlled vocabulary.
-|FIXME
 
 |Publisher
 |This is identification of the data centre publishing the data.
 It contains a long and short name for the data centre and URL to the landing page.
-|FIXME
 
 |Use constraint
 |This is a license for the data.
 This is a URL to the license text and an identifier.
 Utilisation of SPDX is recommended.
-|FIXME
 
 |Data Access
 |This provides direct access to the dataset for download etc. 
 It is not a landing page, but a direct link to the data and indication using a controlled vocabulary of the access mechanism (ranging from direct download to OPeNDAP and OGC WMS).
-|FIXME
 
 |Project
 |A list of projects that has contributed to the creation of the dataset.
 Polarin has to be one of the projects.
-|FIXME
+
+|===
+
+[[discoverymetadatamapping]]
+.A suggested mapping between the elements of the minimum discovery metadata profile and some commonly used metadata standards.
+[%header, cols="1,2,1,1,1,1", header=True]
+|===
+| Metadata field +
+(<<discoverymetadataprofile>>)
+| ISO-19115 +
+(https://standards.iso.org/iso/19139/[ISO-19139], https://standards.iso.org/iso/19115[ISO-19115])
+| DIF 10.2 +
+(https://git.earthdata.nasa.gov/projects/EMFD/repos/dif-schemas/browse/10.x/dif_v10.2.xsd[DIF-10.2])
+| Schema.org +
+(https://schema.org/Dataset[Schema.org])
+| DCAT +
+(https://www.w3.org/TR/vocab-dcat-2/[DCAT-2.0])
+| ACDD +
+(https://wiki.esipfed.org/Attribute_Convention_for_Data_Discovery_1-3[ACDD])
+
+| Metadata identifier
+| gmd:fileIdentifier
+| Entry_ID
+| identifier
+| dct:identifier
+| id
+
+| Last update of metadata
+| gmd:dateStamp
+| Metadata_Dates/Metadata_Last_Revision
+| dateModified
+| dct:modified
+| date_metadata_modified
+
+| Title
+| gmd:identificationInfo/gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation/gmd:title
+| Entry_Title
+| name
+| dct:title
+| title
+
+| Abstract
+| gmd:identificationInfo/gmd:MD_DataIdentification/gmd:abstract
+| Summary/Abstract
+| description
+| dct:description
+| summary
+
+| Temporal Extent
+| gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition (gml:endPosition)
+| Temporal_Coverage/Range_DateTime/Beginning_Date_Time (Ending_Date_Time)
+| temporalCoverage
+| dct:temporal
+| time_coverage_start and time_coverage_end
+
+| Geographical Extent
+| gmd:identificationInfo/gmd:MD_DataIdentification/gmd:extent/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox/gmd:westBoundLongitude (gmd:eastBoundLongitude, gmd:southBoundLatitude, gmd:northBoundLatitude)
+| Spatial_Coverage/Geometry/Bounding_Rectangle/Westernmost_Longitude (Northernmost_Latitude, Southernmost_Latitude, Easternmost_Longitude)
+| spatialCoverage
+| dct:spatial
+| geospatial_lat_min,geospatial_lat_max, geospatial_lon_min,geospatial_lon_max
+
+| Keywords
+| gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword (and gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title)
+| Science_Keywords for GCMD Science Keywords (or Ancillary_Keyword for free text)
+| keywords
+| dcat:theme (or dcat:keyword for free text)
+| keywords, keywords_vocabulary
+
+| Personnel
+| gmd:identificationInfo/gmd:MD_DataIdentification/gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:individualName (gmd:organisationName, gmd:contactInfo and gmd:role)
+| Personnel/Role and Personnel/Contact_Person/First_Name (Last_Name, Email)
+| creator, contributor
+| dcat:contactPoint, dct:creator
+| creator_email, creator_institution, creator_name, creator_type, creator_url, contributor_name, contributor_role
+
+| Publisher
+| gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributorContact
+| Organization/Organization_Name/Short_Name (Long_Name) and Organization/Organization_URL
+| publisher
+| dct:publisher
+| publisher_name, publisher_email, publisher_institution, publisher_type, publisher_url
+
+| Use constraint
+| gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints (type=otherRestrictions) and gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints
+| Use_Constraints
+| license
+| dct:license
+| license
+
+| Data Access
+| gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:linkage (and gmd:protocol)
+| Related_URL/URL_Content_Type/Type and Related_URL/URL
+| Distribution  and Distribution/contentUrl
+| dcat:distribution (dcat:downloadURL and dcat:accessService)
+| TBD
+
+| Project
+| can be providede through keywords using "project" as gmd:MD_KeywordTypeCode
+| Project/Short_Name (and Long_Name)
+| funding
+| TBD
+| project
 
 |===
 
