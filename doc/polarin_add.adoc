@@ -19,8 +19,8 @@
 [cols=">1,^2,5,2",]
 |===
 |Version |Date |Comment |Responsible
-|0.2 |2024-27-11 |added more details to most sections |Daan Kivits
-|0.1 |2024-??-?? |???. |Øystein Godøy
+|0.2 |2024-11-27 |added more details to most sections |Daan Kivits
+|0.1 |2024-09-18 |Outline modified from SIOS ADD. |Øystein Godøy
 |===
 
 This work is released under the Creative Commons Attribution 4.0 License. To view a copy of the license, visit https://creativecommons.org/licenses/by/4.0/.
@@ -83,7 +83,7 @@ Data and system managers within POLARIN, in particular participants in POLARIN W
 === Applicable documents
 
 [horizontal]
-[[pp]]RD-1:: POLARIN Project Proposal (unpublished)
+[[pp]]RD-1:: Description of the action (DOA) (Associated with document Ref. Ares(2023)7293125 - 26/10/2023)
 [[sdmsadd]]RD-2:: link:https://github.com/SIOS-Svalbard/SDMSArchitecture[SIOS Data Management System Architecture Document]
 [[ucd]]RD-3:: link:https://github.com/he-polarin/va-ucd[POLARIN Web Portal Use Case Document (in draft version)]
 [[cd]]RD-4:: Concept document (not available yet)
@@ -128,11 +128,17 @@ exposed in a standard machine-readable interface.
 
 Here is a short overview of the different parts of the data catalogue setup:
 
-* *(md)harvester*: this is where all discovery metadata records from the data centers (‘external sources’ in the schematic) are harvested. This will be the connection to standardised machine-readable endpoints.
-* *mdhtransform*: this is where the metadata standards provided by external resources (i.e. the metadata harvested in the previous step) are translated to the internal metadata model.
-* *mdfilter*: this is where POLARIN relevant metadata is filtered.
-* *mdingest*: this is where the filtered metadata records are ingested into SolR (search engine). SolR is the backend of the mdcat (machine readable interface – pyCSW).
-* *mdcat*: this is the machine-readable interface of the data catalogue, that offers machine-to-machine (M2M) protocols through a pyCSW implementation. This includes (but is not limited to) OAI-PMH, OGC CSW, and OpenSearch.
+[horizontal]
+(md)harvester:: 
+this is where all discovery metadata records from the data centers (‘external sources’ in the schematic) are harvested. This will be the connection to standardised machine-readable endpoints.
+mdtransform:: 
+this is where the metadata standards provided by external resources (i.e. the metadata harvested in the previous step) are translated to the internal metadata model.
+mdfilter:: 
+this is where POLARIN relevant metadata is filtered.
+mdingest:: 
+this is where the filtered metadata records are ingested into SolR (search engine). SolR is the backend of the mdcat (machine readable interface – pyCSW).
+mdcat:: 
+this is the machine-readable interface of the data catalogue, that offers machine-to-machine (M2M) protocols through a pyCSW implementation. This includes (but is not limited to) OAI-PMH, OGC CSW, and OpenSearch.
 
 The flexible architecture of pyCSW allows for the relatively efficient implementation emerging M2M protocols, making it future-proof for evolving standards and specialized needs. Overall, pyCSW’s support for multi-protocol, machine-readable interfaces strengthens data accessibility and fosters collaboration, ensuring continued relevance as data-sharing standards evolve.
 
@@ -141,6 +147,7 @@ The flexible architecture of pyCSW allows for the relatively efficient implement
 
 NOTE: The front end can add additional external sources to the human front end, but will have to crosscheck for uniqueness with the datasets using the identifiers of the datasets found in the POLARIN data catalogue.
 
+// CNR to fill in
 FIXME
 
 == Documentation standards
@@ -209,6 +216,8 @@ Polarin has to be one of the projects.
 
 |===
 
+[.landscape]
+<<<
 [[discoverymetadatamapping]]
 .A suggested mapping between the elements of the minimum discovery metadata profile and some commonly used metadata standards.
 [%header, cols="1,2,1,1,1,1", header=True]
@@ -311,6 +320,8 @@ Polarin has to be one of the projects.
 | project
 
 |===
+[.portrait]
+<<<
 
 === Data documentation standards
 
