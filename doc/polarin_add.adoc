@@ -102,7 +102,7 @@ NOTE: We should use a more simple, conceptual architecture diagram here, similar
 [[detailed_architecture]]
 == Detailed architecture
 
-This chapter describes the overall architecture of the proposed POLARIN web portal, worked on in both WP 4 and WP 5. <<data_catalogue>> describes the design of the {POLARIN} data catalogue (back-end), and <<human_frontend>> describes the design of the human readable interface (front-end) that exposes the metadata from the data catalogue.
+This chapter describes the overall architecture of the proposed POLARIN web portal, worked on in both WP 4 and WP 5. <<data_catalogue>> describes the design of the POLARIN data catalogue (back-end), and <<human_frontend>> describes the design of the human readable interface (front-end) that exposes the metadata from the data catalogue.
 
 [[architecture_overview]]
 === Architecture overview
@@ -139,7 +139,7 @@ The flexible architecture of pyCSW allows for the relatively efficient implement
 [[human_frontend]]
 === Human frontend
 
-NOTE: The front end can add additional external sources to the human front end, but will have to crosscheck for uniqueness with the datasets using the identifiers of the datasets found in the {POLARIN} data catalogue.
+NOTE: The front end can add additional external sources to the human front end, but will have to crosscheck for uniqueness with the datasets using the identifiers of the datasets found in the POLARIN data catalogue.
 
 FIXME
 
