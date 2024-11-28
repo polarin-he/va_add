@@ -19,10 +19,11 @@
 [cols=">1,^2,5,2",]
 |===
 |Version |Date |Comment |Responsible
+|0.2 |2024-27-11 |added more details to most sections |Daan Kivits
 |0.1 |2024-??-?? |???. |Øystein Godøy
 |===
 
-This work is released under the Creative Commons Attribution 4.0 License. To view a copy of the license, visit https://creativecommons.org/licenses/by/4.0/. 
+This work is released under the Creative Commons Attribution 4.0 License. To view a copy of the license, visit https://creativecommons.org/licenses/by/4.0/.
 
 image::pictures/ccby.png[]
 
@@ -37,7 +38,7 @@ toc::[]
 === Background
 
 // Copied from website...
-POLARIN is an international network of polar research infrastructures and their services, aiming at addressing the scientific challenges of the polar regions. 
+POLARIN is an international network of polar research infrastructures and their services, aiming at addressing the scientific challenges of the polar regions.
 The network includes a wide array of complementary and interdisciplinary top level research infrastructures: Arctic and Antarctic research stations, research vessels and icebreakers operating at both poles, observatories, data infrastructures and ice and sediment core repositories.
 
 POLARIN will provide integrated, challenge-driven, and combined access to these infrastructures to facilitate interdisciplinary research on complex processes.
@@ -48,7 +49,25 @@ POLARIN has the following six specific objectives, coherent with the work packag
 . Improve data services and provide customised data products.
 . Provide virtual access (VA) to data and data services.
 . Provide training for infrastructure users.
-. Advertise RI services and engage RI users. 
+. Advertise RI services and engage RI users.
+
+This document is addressing user requirements for items 3 and 4 above, with specific emphasis on item 4 - providing virtual access to data. More information on the POLARIN project can be found in the Description of Work described in the POLARIN project proposal <<pp>>.
+
+NOTE: The first version of this document was developed from the a similar Use Case document used within Svalbard Integrated Arctic Earth Observing System (SIOS) (<<sdmsadd>>).
+
+=== Definitions
+
+The term _data product_ is quite wide and in the remaining the term _dataset_ will be used.
+This can be observational data but also processed observations etc for a specific purpose.
+The working definition of a dataset is in line with the INSPIRE directive:
+
+____
+an identifiable collection of spatial data, i.e. a collection of data that has a reference by name or coordinates to a geographic location or area, and which in addition have a designated start and end time.
+____
+
+A dataset can contain observations (remote or in situ), derived quantities (from either of these two types of data sources) or forecasts of future states of environmental parameters.
+Data values can be located at a single point, along a line or transect, in a regular or irregular grid, and be captured or estimated at one or more altitudes/depths.
+A dataset can be stored on paper, in files (one or more), or in a database, and is often accompanied by descriptions (metadata) of its content.
 
 === Scope of document
 
@@ -64,42 +83,63 @@ Data and system managers within POLARIN, in particular participants in POLARIN W
 === Applicable documents
 
 [horizontal]
-[[dow]]RD-1:: Description of work as represented by the proposal.
-[[ucd]]RD-2:: Use Case Document (in draft version)
-[[cd]]RD-3:: Concept document (not available yet)
+[[pp]]RD-1:: POLARIN Project Proposal (unpublished)
+[[sdmsadd]]RD-2:: link:https://github.com/SIOS-Svalbard/SDMSArchitecture[SIOS Data Management System Architecture Document]
+[[ucd]]RD-3:: link:https://github.com/he-polarin/va-ucd[POLARIN Web Portal Use Case Document (in draft version)]
+[[cd]]RD-4:: Concept document (not available yet)
 
 == Overall concept
-An outline of the division of tasks between work package 4 and 5 is provided in <<architecturediagram>>.
-This diagram indicates that development of the human front end to the Polarin data catalogue is done within WP 4, while virtual access as such is provided in WP 5.
-The latter is done through compilation of the Polarin data catalogue (WP 5).
-This catalogue is utilised by the human front end developed in WP 4.
-The requirements that the human interface has to fulfil is outlined in <<ucd>>.
+An outline of the division of tasks between work package 4 and 5 is provided in
+<<architecturediagram>>, and a more detailed description can be found in <<architecture_overview>>.
+This diagram indicates that development of the human front end to the POLARIN data catalogue
+is done within WP 4, while virtual access as such is provided in WP 5.
+The latter is done through compilation of the POLARIN data catalogue in WP 5 (<<data_catalogue>>),
+which is then utilised by the human front end developed in WP 4 (<<human_frontend>>).
+The requirements that the human interface has to fulfil are outlined in <<ucd>>.
 
-NOTE: The front end can add additional sources to the human front end, but will have to check for uniqueness using the identifiers of the datasets found in the Polarin data catalogue.
+NOTE: We should use a more simple, conceptual architecture diagram here, similar to <<architecturediagram>> but less detailed.
 
-// Potentially to be moved down and replaced by a more dedicated illustration here.
+[[detailed_architecture]]
+== Detailed architecture
+
+This chapter describes the overall architecture of the proposed POLARIN web portal, worked on in both WP 4 and WP 5. <<data_catalogue>> describes the design of the {POLARIN} data catalogue (back-end), and <<human_frontend>> describes the design of the human readable interface (front-end) that exposes the metadata from the data catalogue.
+
+[[architecture_overview]]
+=== Architecture overview
+NOTE: <<architecturediagram>> should be updated according to the input from WP 4 regarding the implementation of the human front-end (described in more detail in <<human_frontend>>)
+
 [[architecturediagram]]
 .Architecture diagram
 image::diagrams/polarin_architecture_diagram.png[pdfwidth=500px, align=center]
 
-The datasets relevant for Polarin may be hosted in a number of data centres.
-Some of these are members of Polarin, while others are not but have been used by research infrastructures/stations for a long period.
-All datasets have to be properly tagged with Polarin as a project name.
-This information is used to filter out the relevant datasets for Polarin.
+The datasets relevant for POLARIN may be hosted in a number of data centres.
+Some of these are members of POLARIN, while others are not but have been used by research infrastructures/stations for a long period.
+All datasets have to be properly tagged with POLARIN as a project name.
+This information is used to filter out the relevant datasets for POLARIN.
 
 NOTE: A minimum discovery metadata profile has been identified and is further described below.
-
-== Detailed architecture
-
-=== Architecture overview
-
-NOTE: Should use <<architecturediagram>> here and create a new above.
-
+[[data_catalogue]]
 === Data catalogue
 
-FIXME
+The proposed POLARIN data catalogue as designed in WP 5 will adhere to the structure given in <<architecturediagram>>, according to the following pipeline:
+metadata records are harvested from multiple external resources; the metadata records are then translated into an internal metadata model;
+the translated metadata records relevant to POLARIN are identified and filtered; the filtered metadata records are then ingested into a central database / search engine and then
+exposed in a standard machine-readable interface.
 
+Here is a short overview of the different parts of the data catalogue setup:
+
+* *(md)harvester*: this is where all discovery metadata records from the data centers (‘external sources’ in the schematic) are harvested. This will be the connection to standardised machine-readable endpoints.
+* *mdhtransform*: this is where the metadata standards provided by external resources (i.e. the metadata harvested in the previous step) are translated to the internal metadata model.
+* *mdfilter*: this is where POLARIN relevant metadata is filtered.
+* *mdingest*: this is where the filtered metadata records are ingested into SolR (search engine). SolR is the backend of the mdcat (machine readable interface – pyCSW).
+* *mdcat*: this is the machine-readable interface of the data catalogue, that offers machine-to-machine (M2M) protocols through a pyCSW implementation. This includes (but is not limited to) OAI-PMH, OGC CSW, and OpenSearch.
+
+The flexible architecture of pyCSW allows for the relatively efficient implementation emerging M2M protocols, making it future-proof for evolving standards and specialized needs. Overall, pyCSW’s support for multi-protocol, machine-readable interfaces strengthens data accessibility and fosters collaboration, ensuring continued relevance as data-sharing standards evolve.
+
+[[human_frontend]]
 === Human frontend
+
+NOTE: The front end can add additional external sources to the human front end, but will have to crosscheck for uniqueness with the datasets using the identifiers of the datasets found in the {POLARIN} data catalogue.
 
 FIXME
 
@@ -120,7 +160,7 @@ NOTE: It is expected that a number of metadata standards has to be supported, in
 |Purpose
 
 |Metadata identifier
-|A unique identifier for the dataset. 
+|A unique identifier for the dataset.
 This is used to avoid duplicate records in aggregator catalogues.
 Utilisation of UUID with a namespace prefix is recommended.
 
@@ -134,7 +174,7 @@ Utilisation of UUID with a namespace prefix is recommended.
 |A short summary of the dataset, its purpose and how it was generated.
 
 |Temporal Extent
-|The temporal spanning of the dataset. 
+|The temporal spanning of the dataset.
 This can be a multi temporal dataset.
 
 |Geographical Extent
@@ -143,7 +183,7 @@ This can be a point, a bounding box, trajectory or a polygon.
 
 |Keywords
 |Keywords describing the dataset.
-Ideally this comes from controlled vocabularies and describes the variables of the dataset. 
+Ideally this comes from controlled vocabularies and describes the variables of the dataset.
 
 |Personnel
 |Identification of all people that have contributed to the dataset.
@@ -160,7 +200,7 @@ This is a URL to the license text and an identifier.
 Utilisation of SPDX is recommended.
 
 |Data Access
-|This provides direct access to the dataset for download etc. 
+|This provides direct access to the dataset for download etc.
 It is not a landing page, but a direct link to the data and indication using a controlled vocabulary of the access mechanism (ranging from direct download to OPeNDAP and OGC WMS).
 
 |Project
@@ -274,17 +314,71 @@ Polarin has to be one of the projects.
 
 === Data documentation standards
 
-Polarin is recommending usage of Darwin Core Archives and CF-NetCDF for documentation of datasets.
+POLARIN is recommending usage of CF-NetCDF and Darwin Core Archives (DwC-A) for documentation of datasets.
+These are internationally recognized file formats that allow for providing embedded metadata
+in the file structure itself. By making datasets self-describing, these formats significantly reduce the
+need for human intervention in the data life cycle, from ingestion to reuse.
+
+These file formats also align with ENVRI-FAIR recommendations for FAIR (Findable, Accessible, Interoperable, Reusable) data practices.
+
+CF-NetCDF:: NetCDF is a binary format that is most suitable for storing multi-dimensional array-based numerical
+scientific data, and can be made FAIR-compliant when combined with the adoption of the Climate and Forecast (CF)
+and Attribute Convention for Data Discovery (ACDD) conventions. The file format is recommended for
+meteorological, oceanographic, hydrological and glaciological data, but other types of data might also be suitable
+for CF-NetCDF.
+
+Darwin Core Archive:: Darwin Core is a data standard originally developed for biodiversity informatics,
+though this has expanded to be useful for various types of data associated with one or a list of organisms.
+It is the backbone of the Global Biodiversity Information Facility GIBIFfootnote:[GBIF Darwin Core:https://www.gbif.org/darwin-core]
+and the Ocean Biodiversity Information System (OBISfootnote:[https://obis.org/]). It consists of a set of comma separated files (CSV) bundled with a
+metafile (meta.xml) and using controlled vocabularies to describe the content. A second file (eml.xml)
+describes the content and strucuture of the CSVs and links the column headers to the Darwin Core terms.
+
+==== Data granularity
+
+POLARIN recommends to follow the following general guidelines on dataset granularity:
+
+. as a general guideline, always publish data at the highest possible functional granularity (i.e. not individual measurements, but neither several stations combined in one dataset)
+. never combine data with different temporal dimensions (e.g. minute and hourly resolutions) in the same dataset.
+. never combine data with different vertical dimensions (e.g. surface observations and vertical profiles) in the same dataset.
+. if there is a need to reference datasets to collection work (e.g. research cruises or field work), establish this reference through tags on the data or parent/child relations allowing data consumers to collect data based on content and spatio-temporal position.
+
+These guidelines are based on the granularity perspectives practised by the Svalbard Integrated Arctic Earth Observing System (SIOS), which are explained in more detail link:https://github.com/SIOS-Svalbard/SDMSGranularityPerspectives/[here].
+
+==== Types of metadata and machine interoperability
+
+There exists several types of metadata, which serve different purposes. The most relevant in this context are:
+
+Discovery metadata::: This type of metadata describes who did what, where and when, how to access data and potential constraints on the
+data. It shall also link to further information on the data, if relevant. It includes information like titles, keywords, abstracts, geographic locations,
+dates, and creators. Its primary role is to make resources discoverable in catalogs, repositories, or search
+engines.
+
+NOTE: Examples of discovery metadata: ISO-19115, GCMD DIF and ACDD.
+
+Use metadata::: This type of metadata describes the actual contentof a dataset and how it is encoded. The
+purpose is to enable the user to understand the data without any further communication. It describes content of
+variables using standardised vocabularies, units of variable, encoding of missing values, map projections etc.
+Use metadata is especially important to build and provide services and tools on top of the data, as it ensures
+that users and machine interfaces can effectively work with the resource once it is found.
+
+NOTE: Examples of use metadata are: Climate and Forecast (CF convention) and Darwin Core Archive
+
+The use of standardized metadata enables the use of M2M interfaces, which are vital for automating data discovery, integration, and analysis. This is key to support the harvesting
+procedures of POLARIN, enhancing usability and enabling complex, automated workflows across various scientific domains.
+
+==== Supporting data interoperability across scientific domains
+
+The standardized structure of DwC-A and CF-NetCDF promotes interoperability, allowing data to be shared and integrated across scientific domains. POLARIN leverages these strengths to bring together heterogeneous datasets, creating a unified and accessible data ecosystem that supports and aims to advance interdisciplinary research collaboration.
+
+By adopting DwC-A and CF-NetCDF, POLARIN complies with ENVRI-FAIR recommendationsfootnote:[For more details, visit https://envri.eu/envri-fair/], which emphasize the importance of using internationally recognized standards, machine-actionable metadata and interoperability to achieve FAIR data principles.
+
+NOTE: When it is not possible to encode data as CF-NetCDF or DwC-A, data can be published in a non-proprietary file format that is easy to consume for users (without specific software) accompanied by a detailed product manual (in PDF format).
+
+=== Exchange of harvested discovery metadata
 
 NOTE: Further details to be clarified.
 
-FIXME
-
-Darwin Core Archive:: Is suitable for...
-CF-NetCDF:: Is suitable for...
-
-NOTE: Data that doesn't fit into the classes above should be accompanied by a detailed documentation in PDF format.
-
-=== Exchange of discovery metadata
-
-FIXME
+The POLARIN metadata catalogue will provide the discovery metadata from the harvested external sources through a
+standard machine-readable endpoint (described as 'mdcat' in <<architecturediagram>>). This machine-readable
+endpoint can be accessed by the human front-end described in <<human_frontend>>.
