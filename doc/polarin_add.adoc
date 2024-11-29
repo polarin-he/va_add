@@ -51,7 +51,7 @@ POLARIN has the following six specific objectives, coherent with the work packag
 . Provide training for infrastructure users.
 . Advertise RI services and engage RI users.
 
-This document is addressing user requirements for items 3 and 4 above, with specific emphasis on item 4 - providing virtual access to data. More information on the POLARIN project can be found in the Description of Work described in the POLARIN project proposal <<pp>>.
+This document is addressing user requirements for items 3 and 4 above, with specific emphasis on item 4 - providing virtual access to data. More information on the tasks associated with the POLARIN project can be found in the Description of the Action (DoA) document described <<doa>>.
 
 NOTE: The first version of this document was developed from the a similar Use Case document used within Svalbard Integrated Arctic Earth Observing System (SIOS) (<<sdmsadd>>).
 
@@ -83,7 +83,7 @@ Data and system managers within POLARIN, in particular participants in POLARIN W
 === Applicable documents
 
 [horizontal]
-[[pp]]RD-1:: Description of the action (DOA) (Associated with document Ref. Ares(2023)7293125 - 26/10/2023)
+[[doa]]RD-1:: POLARIN Description of the action (DOA) (Associated with document Ref. Ares(2023)7293125 - 26/10/2023)
 [[sdmsadd]]RD-2:: link:https://github.com/SIOS-Svalbard/SDMSArchitecture[SIOS Data Management System Architecture Document]
 [[ucd]]RD-3:: link:https://github.com/he-polarin/va-ucd[POLARIN Web Portal Use Case Document (in draft version)]
 [[cd]]RD-4:: Concept document (not available yet)
