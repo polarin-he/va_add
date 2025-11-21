@@ -1,0 +1,58 @@
+@startuml
+skinparam dpi 300   ' higher DPI image, keeps text sharp
+!pragma layout smetana  ' (optional, for cleaner layout)
+!theme blueprint
+
+' External data sources
+node "Non-interoperable POLARIN data nodes" as data_nodes
+
+' External metadata sources
+node metadata_nodes [
+Other interoperable POLARIN data nodes
+]
+
+
+
+' POLARIN metadata catalogue
+node pmc [
+<b>POLARIN metadata catalogue</b>
+----
+Catalogue is available through 
+machine interfaces offered through 
+pycsw (supporting several protocols 
+like OAI-PMH, OGC CSW, OpenSearch, 
+schema.org, etc)]
+
+' POLARIN ERDDAP server
+database "<b>POLARIN ERDDAP server</b>" as pes
+
+' POLARIN GeoNetwork central data catalogue
+rectangle "<b>POLARIN GeoNetwork central data catalogue</b>" as pgcdc 
+
+' POLARIN Data Hub
+cloud "POLARIN Data Hub" as pdh {
+    component "Data Catalog" as data_catalog   
+    component "Data Viewer" as data_viewer
+    component "Data Processing Tools" as data_tools
+}
+
+' API
+hexagon "API" as api
+
+metadata_nodes -down-> pgcdc
+
+pmc -left-> pgcdc
+
+data_nodes -down-> pes
+
+
+pgcdc -[hidden]--> pdh
+
+pgcdc --> api: metadata
+api -right-> pdh: enriched metadata
+
+pes -down-> pdh: data
+
+pes -right-> pgcdc: standardized metadata
+
+@enduml

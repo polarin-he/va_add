@@ -3,153 +3,14 @@
 :sectanchors:
 :toc: macro
 :toclevels: 4
-:sectnums:
 :sectnumlevels: 6
 :chapter-label:
 :xrefstyle: short
 :title-page:
-= Technical documentation: Architecture Design Document
+= Technical documentation: POLARIN minimum discovery metadata profile
 
 <<<
-
-
-[discrete]
-== Versions
-
-[cols=">1,^2,5,2",]
-|===
-|Version |Date |Comment |Responsible
-|0.2 |2024-11-27 |added more details to most sections |Daan Kivits
-|0.1 |2024-09-18 |Outline modified from SIOS ADD. |Øystein Godøy
-|===
-
-This work is released under the Creative Commons Attribution 4.0 License. To view a copy of the license, visit https://creativecommons.org/licenses/by/4.0/.
-
-image::pictures/ccby.png[]
-
-<<<
-
-toc::[]
-
-<<<
-
-== Introduction
-
-=== Background
-
-// Copied from website...
-POLARIN is an international network of polar research infrastructures and their services, aiming at addressing the scientific challenges of the polar regions.
-The network includes a wide array of complementary and interdisciplinary top level research infrastructures: Arctic and Antarctic research stations, research vessels and icebreakers operating at both poles, observatories, data infrastructures and ice and sediment core repositories.
-
-POLARIN will provide integrated, challenge-driven, and combined access to these infrastructures to facilitate interdisciplinary research on complex processes.
-POLARIN has the following six specific objectives, coherent with the work packages, each with measurable outcomes:
-
-. Enable science for understanding and predicting key processes in polar regions.
-. Provide efficient challenge-driven transnational access (TA) to top level RIs in the polar regions.
-. Improve data services and provide customised data products.
-. Provide virtual access (VA) to data and data services.
-. Provide training for infrastructure users.
-. Advertise RI services and engage RI users.
-
-This document addresses user requirements for items 3 and 4 above, with specific emphasis on item 4 - providing virtual access to data. More information on the tasks associated with the POLARIN project can be found in the Description of the Action (DoA) document described in <<doa>>.
-
-NOTE: The first version of this document was developed from the a similar Use Case document used within Svalbard Integrated Arctic Earth Observing System (SIOS) (<<sdmsadd>>).
-
-=== Definitions
-
-The term _data product_ is quite wide and in the remaining the term _dataset_ will be used.
-This can be observational data but also processed observations etc for a specific purpose.
-The working definition of a dataset is in line with the INSPIRE directive:
-
-____
-an identifiable collection of spatial data, i.e. a collection of data that has a reference by name or coordinates to a geographic location or area, and which in addition have a designated start and end time.
-____
-
-A dataset can contain observations (remote or in situ), derived quantities (from either of these two types of data sources) or forecasts of future states of environmental parameters.
-Data values can be located at a single point, along a line or transect, in a regular or irregular grid, and be captured or estimated at one or more altitudes/depths.
-A dataset can be stored on paper, in files (one or more), or in a database, and is often accompanied by descriptions (metadata) of its content.
-
-=== Scope of document
-
-This document describes the architecture of POLARIN Virtual Access.
-It is not an official deliverable of the project, but aims to establish a common foundation for the work in work packages 4 and 5.
-
-NOTE: This document is not a formalised Architecture Document following a formalised approach like RM-ODP (Reference Model for Open Distributed Processing), but rather a lightweight architecture approach.
-
-=== Intended audience
-
-Data and system managers within POLARIN, in particular participants in POLARIN Work Packages 4 and 5, "Improvement of data services and customised data products" and "Provision of virtual access" respectively.
-
-=== Applicable documents
-
-[horizontal]
-[[doa]]RD-1:: POLARIN Description of the action (DoA) (Associated with document Ref. Ares(2023)7293125 - 26/10/2023)
-[[sdmsadd]]RD-2:: link:https://github.com/SIOS-Svalbard/SDMSArchitecture[SIOS Data Management System Architecture Document]
-[[ucd]]RD-3:: link:https://github.com/he-polarin/va-ucd[POLARIN Web Portal Use Case Document (in draft version)]
-[[cd]]RD-4:: Concept document (not available yet)
-
-== Overall concept
-An outline of the division of tasks between work package 4 and 5 is provided in
-<<architecturediagram>>, and a more detailed description can be found in <<architecture_overview>>.
-This diagram indicates that development of the human front end to the POLARIN data catalogue
-is done within WP 4, while virtual access as such is provided in WP 5.
-The latter is done through compilation of the POLARIN data catalogue in WP 5 (<<data_catalogue>>),
-which is then utilised by the human front end developed in WP 4 (<<human_frontend>>).
-The requirements that the human interface has to fulfil are outlined in <<ucd>>.
-
-NOTE: We should use a more simple, conceptual architecture diagram here, similar to <<architecturediagram>> but less detailed.
-
-[[detailed_architecture]]
-== Detailed architecture
-
-This chapter describes the overall architecture of the proposed POLARIN web portal, worked on in both WP 4 and WP 5. <<data_catalogue>> describes the design of the POLARIN data catalogue (back-end), and <<human_frontend>> describes the design of the human readable interface (front-end) that exposes the metadata from the data catalogue.
-
-[[architecture_overview]]
-=== Architecture overview
-NOTE: <<architecturediagram>> should be updated according to the input from WP 4 regarding the implementation of the human front-end (described in more detail in <<human_frontend>>)
-
-[[architecturediagram]]
-.Architecture diagram
-image::diagrams/polarin_architecture_diagram.png[pdfwidth=500px, align=center]
-
-The datasets relevant for POLARIN may be hosted in a number of data centres.
-Some of these are members of POLARIN, while others are not but have been used by research infrastructures/stations for a long period.
-All datasets have to be properly tagged with POLARIN as a project name.
-This information is used to filter out the relevant datasets for POLARIN.
-
-NOTE: A minimum discovery metadata profile has been identified and is further described below.
-[[data_catalogue]]
-=== Data catalogue
-
-The proposed POLARIN data catalogue as designed in WP 5 will adhere to the structure given in <<architecturediagram>>, according to the following pipeline:
-metadata records are harvested from multiple external resources; the metadata records are then translated into an internal metadata model;
-the translated metadata records relevant to POLARIN are identified and filtered; the filtered metadata records are then ingested into a central database / search engine and then
-exposed in a standard machine-readable interface.
-
-Here is a short overview of the different parts of the data catalogue setup:
-
-[horizontal]
-(md)harvester:: 
-this is where all discovery metadata records from the data centers (‘external sources’ in the schematic) are harvested. This will be the connection to standardised machine-readable endpoints.
-mdtransform:: 
-this is where the metadata standards provided by external resources (i.e. the metadata harvested in the previous step) are translated to the internal metadata model.
-mdfilter:: 
-this is where POLARIN relevant metadata is filtered.
-mdingest:: 
-this is where the filtered metadata records are ingested into SolR (search engine). SolR is the backend of the mdcat (machine readable interface – pyCSW).
-mdcat:: 
-this is the machine-readable interface of the data catalogue, that offers machine-to-machine (M2M) protocols through a pyCSW implementation. This includes (but is not limited to) OAI-PMH, OGC CSW, and OpenSearch.
-
-The flexible architecture of pyCSW allows for the relatively efficient implementation emerging M2M protocols, making it future-proof for evolving standards and specialized needs. Overall, pyCSW’s support for multi-protocol, machine-readable interfaces strengthens data accessibility and fosters collaboration, ensuring continued relevance as data-sharing standards evolve.
-
-[[human_frontend]]
-=== Human frontend
-
-NOTE: The front end can add additional external sources to the human front end, but will have to crosscheck for uniqueness with the datasets using the identifiers of the datasets found in the POLARIN data catalogue.
-
-// CNR to fill in
-FIXME
-
+    
 == Documentation standards
 
 === Minimum discovery metadata profile
@@ -385,11 +246,3 @@ The standardized structure of DwC-A and CF-NetCDF promotes interoperability, all
 By adopting DwC-A and CF-NetCDF, POLARIN complies with ENVRI-FAIR recommendationsfootnote:[For more details, visit https://envri.eu/envri-fair/], which emphasize the importance of using internationally recognized standards, machine-actionable metadata and interoperability to achieve FAIR data principles.
 
 NOTE: When it is not possible to encode data as CF-NetCDF or DwC-A, data can be published in a non-proprietary file format that is easy to consume for users (without specific software) accompanied by a detailed product manual (in PDF format).
-
-=== Exchange of harvested discovery metadata
-
-NOTE: Further details to be clarified.
-
-The POLARIN metadata catalogue will provide the discovery metadata from the harvested external sources through a
-standard machine-readable endpoint (described as 'mdcat' in <<architecturediagram>>). This machine-readable
-endpoint can be accessed by the POLARIN Data Hub, which is described in more detail in <<human_frontend>>.

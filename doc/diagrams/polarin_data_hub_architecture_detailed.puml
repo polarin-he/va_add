@@ -1,0 +1,69 @@
+@startuml
+!theme amiga
+
+' External data sources
+collections "Non-interoperable POLARIN data" as data_nodes
+
+' External metadata sources
+collections "Links to interoperable POLARIN data" as metadata_nodes
+
+' POLARIN metadata catalogue
+frame "POLARIN metadata catalogue"  as pmc {
+    component "harvester" as mdh
+    component "mdhtransform" as mdt
+    component "mdfilter" as mdf
+    component "mdingest" as mdi
+    component mdc [
+        mdcat 
+        ----
+        Catalogue is available through 
+        machine interfaces offered through 
+        pycsw (supporting several protocols 
+        like OAI-PMH, OGC CSW, OpenSearch etc)
+    ]
+}
+
+' POLARIN ERDDAP server
+frame "POLARIN ERDDAP server" as pes {
+    component mdc [
+        mdcat 
+        ----
+        Catalogue is available through 
+        machine interfaces offered through 
+        pycsw (supporting several protocols 
+        like OAI-PMH, OGC CSW, OpenSearch etc)
+    ]
+}
+
+' POLARIN GeoNetwork central data catalogue
+frame "POLARIN GeoNetwork central data catalogue" as pgcdc {
+    component mdc [
+        mdcat 
+        ----
+        Catalogue is available through 
+        machine interfaces offered through 
+        pycsw (supporting several protocols 
+        like OAI-PMH, OGC CSW, OpenSearch etc)
+    ]
+}
+
+' POLARIN Data Hub
+frame "POLARIN Data Hub" as pdh {
+    component "Data Catalog" as data_catalog   
+    component "Data Viewer" as data_viewer
+    component "Data Processing Tools" as data_tools
+}
+
+mdh -> mdt
+mdt --> mdf
+mdf --> mdi
+mdi --> mdc
+
+metadata_nodes --> pgcdc
+data_nodes --> pes
+
+mdc --> pgcdc
+pgcdc --> pdh
+pes --> pdh
+
+@enduml

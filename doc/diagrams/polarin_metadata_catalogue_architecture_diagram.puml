@@ -1,0 +1,40 @@
+@startuml
+
+' External elements
+collections "External sources" as ext
+
+' SIOS elements
+frame "POLARIN data catalogue" {
+    component "harvester" as mdh
+    component "mdhtransform" as mdt
+    component "mdfilter" as mdf
+    component "mdingest" as mdi
+    component mdc [
+        mdcat 
+        ----
+        Catalogue is available
+        through machine interfaces
+        offered through pycsw
+        (supporting several protocols
+        like OAI-PMH, OGC CSW, OpenSearch etc)
+        ....
+        Discovery metadata
+        contain links to
+        actual data,
+        no moving of data
+    ]
+}
+
+mdh -> mdt
+mdt --> mdf
+mdf --> mdi
+mdi --> mdc
+
+ext --> mdh
+
+' POLARIN web portal as a big box
+rectangle "POLARIN web portal\n(designed by POLARIN WP4 (CNR/ETT))" as webportal
+
+mdc --> webportal
+
+@enduml
