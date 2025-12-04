@@ -1,7 +1,7 @@
 @startuml
 left to right direction
 skinparam dpi 300   ' higher DPI image, keeps text sharp
-skinparam defaultFontSize 24
+skinparam defaultFontSize 36
 skinparam defaultFontColor #ffffffff
 skinparam backgroundColor transparent
 skinparam ArrowThickness 4   ' shaft thickness
