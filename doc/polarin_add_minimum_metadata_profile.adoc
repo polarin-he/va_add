@@ -3,17 +3,17 @@
 :sectanchors:
 :toc: macro
 :toclevels: 4
+:sectnums:
 :sectnumlevels: 6
 :chapter-label:
 :xrefstyle: short
 :title-page:
+
 = Technical documentation: POLARIN minimum discovery metadata profile
 
 <<<
-    
-== Documentation standards
 
-=== Minimum discovery metadata profile
+== Minimum discovery metadata profile
 A list of generic elements is provided in <<discoverymetadataprofile>>, together with a high level explanation. In <<discoverymetadatamapping>> a suggested mapping between the metadata elements and commonly used metadata
 standards is provided.
 
@@ -184,7 +184,7 @@ Polarin has to be one of the projects.
 [.portrait]
 <<<
 
-=== Data documentation standards
+== Data documentation standards
 
 POLARIN is recommending usage of CF-NetCDF and Darwin Core Archives (DwC-A) for documentation of datasets.
 These are internationally recognized file formats that allow for providing embedded metadata
@@ -206,7 +206,7 @@ and the Ocean Biodiversity Information System (OBISfootnote:[https://obis.org/])
 metafile (meta.xml) and using controlled vocabularies to describe the content. A second file (eml.xml)
 describes the content and strucuture of the CSVs and links the column headers to the Darwin Core terms.
 
-==== Data granularity
+=== Data granularity
 
 POLARIN recommends to follow the following general guidelines on dataset granularity:
 
@@ -217,7 +217,7 @@ POLARIN recommends to follow the following general guidelines on dataset granula
 
 These guidelines are based on the granularity perspectives practised by the Svalbard Integrated Arctic Earth Observing System (SIOS), which are explained in more detail link:https://github.com/SIOS-Svalbard/SDMSGranularityPerspectives/[here].
 
-==== Types of metadata and machine interoperability
+=== Types of metadata and machine interoperability
 
 There exists several types of metadata, which serve different purposes. The most relevant in this context are:
 
@@ -239,7 +239,7 @@ NOTE: Examples of use metadata are the Climate and Forecast (CF) conventions and
 The use of standardized metadata enables the use of M2M interfaces, which are vital for automating data discovery, integration, and analysis. This is key to support the harvesting
 procedures of POLARIN, enhancing usability and enabling complex, automated workflows across various scientific domains.
 
-==== Supporting data interoperability across scientific domains
+=== Supporting data interoperability across scientific domains
 
 The standardized structure of DwC-A and CF-NetCDF promotes interoperability, allowing data to be shared and integrated across scientific domains. POLARIN leverages these strengths to bring together heterogeneous datasets, creating a unified and accessible data ecosystem that supports and aims to advance interdisciplinary research collaboration.
 
