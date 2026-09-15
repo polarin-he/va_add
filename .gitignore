@@ -1,3 +1,4 @@
 *.swp
 doc/*.swp
 *docx
+/doc/diagrams/_old
