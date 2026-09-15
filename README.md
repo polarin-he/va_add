@@ -10,11 +10,9 @@ The intended audience of this repository are the POLARIN project partners, and i
 ## Contributing to this document
 It is assumed that editing of document/diagrams is done by a limited group of people, while others pose comments and requirements through GitHub issues.
 
-If u want to contribute to the contents of this repository, please do so according to the following guidelines: open an issue here on GitHub, make changes to a new branch and make a pull request. 
+If you want to contribute to the contents of this repository, please do so according to the following guidelines: open an issue here on GitHub, make changes to a new branch and make a pull request. If you are not comfortable with this approach, please [email us](mailto:polarin@sios-svalbard.org) to request changes! 
 
-![Intended workflow](<img src="POLARIN/va-add/doc/pictures/github-workflow4documents.png" width="500" height="300">)
-
-If not comfortable with this approach, please [email us](mailto:polarin@sios-svalbard.org) to request changes!
+![Intended workflow](./doc/pictures/github-workflow4documents.png)
 
 ## The POLARIN project 
 POLARIN is a EU-HORIZON2020 project that compiles an international network of polar research infrastructures and their services, aiming at addressing the scientific challenges of the polar regions. The network includes a wide array of complementary and interdisciplinary top level research infrastructures: Arctic and Antarctic research stations, research vessels and icebreakers operating at both poles, observatories, data infrastructures and ice and sediment core repositories.
