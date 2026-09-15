@@ -1,8 +1,8 @@
 [![CC BY 4.0][cc-by-shield]][cc-by]
 # Data architecture description for Virtual Access in the POLARIN project
-This repository documents the data architecture for Virtual Access (VA) within the POLARIN project. Documents are added as ASCIIDOC and diagrams as PlantUML. Both need post-processing into HTML/PDF and PNG respectively.
+This repository documents the data architecture for Virtual Access (VA) within the POLARIN project. This is the Architecture Design Document (ADD) and it is based on a similar document developed for the Svalbard Integrated Arctic Earth Observing System (SIOS) Data Management System. Documents are added as ASCIIDOC and diagrams as PlantUML. Both need post-processing into HTML/PDF and PNG respectively.
 
-| NOTE: This repository is a work in progress. Even though the repository is prepared to host a full Architecture Design Document (ADD), this is not done yet. For now it is merely a collection of diagrams that are useful for discussion.
+| NOTE: This repository is a work in progress. Even though the repository is prepared to host a full ADD, this is not done yet. For now it is merely a collection of diagrams that are useful for discussion.
 
 ## Intended audience
 The intended audience of this repository are the POLARIN project partners, and in particular the work package (WP) 4 and 5 team members. The repository is also open to the public, and anyone interested in the data architecture of Virtual Access in POLARIN is welcome to read and comment on the content.
