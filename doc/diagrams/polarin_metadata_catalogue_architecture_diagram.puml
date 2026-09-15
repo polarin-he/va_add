@@ -1,40 +1,75 @@
 @startuml
 
-' External elements
-collections "External sources" as ext
+skinparam defaultTextAlignment center
+
+<style>
+frame {
+    BackGroundColor #FFFFFF
+}
+arrow {
+  LineColor #00000069
+  LineThickness 2
+}
+</style>
+
+' POLARIN RIs
+collections "POLARIN research infrastructure data" as ext
+collections "POLARIN TA data" as polTAdata
+collections "other polar research data" as otherdata
+
 
 ' SIOS elements
-frame "POLARIN data catalogue" {
-    component "harvester" as mdh
+frame "POLARIN metadata catalogue (WP5/VA1)" {
+    component "mdharvester" as mdh
     component "mdhtransform" as mdt
+    component "mdenrich" as mde
     component "mdfilter" as mdf
     component "mdingest" as mdi
     component mdc [
         mdcat 
         ----
-        Catalogue is available
-        through machine interfaces
-        offered through pycsw
-        (supporting several protocols
-        like OAI-PMH, OGC CSW, OpenSearch etc)
-        ....
-        Discovery metadata
-        contain links to
-        actual data,
-        no moving of data
-    ]
+        Catalogue is available through 
+        machine interfaces offered through 
+        pycsw (supporting several protocols 
+        like OAI-PMH, OGC CSW, OpenSearch, 
+        schema.org, etc)]
 }
 
-mdh -> mdt
-mdt --> mdf
-mdf --> mdi
-mdi --> mdc
+' External elements as boxes: POLARIN GeoNetwork; Other data portals; 
+frame "Other POLARIN data components (WP4)" {
+    database "POLARIN\nERDDAP\nServer" as polerddap
+    database "POLARIN\nZenodo\nCommunity" as polzenodo
+    database "POLARIN\nGeoNetwork" as polgeo
+    rectangle "POLARIN\nGeoServer" as polgeoserver
+    rectangle "POLARIN Data Hub" as pdh
+}
+collections "Other (polar research) data portals" as prdp
 
+' 1. external sources --> VA catalogue
 ext --> mdh
+ext --> polgeo
+polTAdata --> polzenodo
+polTAdata --> polerddap
+polTAdata --> polgeo
+otherdata --> polerddap
+otherdata --> polgeo
 
-' POLARIN web portal as a big box
-rectangle "POLARIN web portal\n(designed by POLARIN WP4 (CNR/ETT))" as webportal
+' 2. within VA catalogue
+mdh -[dashed]-> mdt
+mdt -[dashed]-> mde
+mde -[dashed]-> mdf
+mdf -[dashed]-> mdi
+mdi -[dashed]-> mdc
 
-mdc --> webportal
+' 3. VA catalogue --> other POLARIN data components
+mdc --> polgeo
+polerddap -[dashed]-> polgeo
+polzenodo -[dashed]-> polgeo
+mdc --> prdp
+
+' 4. other POLARIN data components --> POLARIN Data Hub
+polgeo -[dashed]-> pdh
+polgeo -[dashed]-> polgeoserver
+polgeoserver -[dashed]-> pdh
 
 @enduml
